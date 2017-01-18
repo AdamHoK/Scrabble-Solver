@@ -25,11 +25,16 @@ letters=''.join(questionMark(letters)[0])
 words={}
 
 for word in array:
-    counter=0
+    temp = []
     for letter in letters:
         if letter in word:
-            counter+=1
-    words[word]=counter
+            temp.append(letter)
+            if temp.count(letter)>1:
+                temp.pop(temp.index(letter))
+
+    words[word]=len(temp)
+
+
 
 perfect=[]
 results={}
