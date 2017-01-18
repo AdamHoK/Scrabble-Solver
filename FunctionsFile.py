@@ -15,7 +15,8 @@ def questionMark(input):
         if letter=='?':
             amount+=1
             l.pop(l.index(letter))
-    return l
+    print(amount)
+    return l, amount
 
 
 def sort(x, perfect, letters, results, backup):
@@ -23,28 +24,28 @@ def sort(x, perfect, letters, results, backup):
     for i in sorted_x:
         wordFixed=i[0]
         wordFixed=wordFixed[:-1]
+        '''checker(letters, wordFixed) and '''
+        if len(wordFixed)>2:
+            if amount>0:
+                if len(wordFixed)<=(len(letters)+amount) and \
+                    wordFixed[0]==final(backup, wordFixed)[0] and \
+                    wordFixed[len(wordFixed)-1]==final(backup, wordFixed)[1]:
 
-        if amount>0:
-            if checker(letters, wordFixed) and len(wordFixed)<=(len(letters)+amount) and \
-                            wordFixed[0]==final(backup, wordFixed)[0] and \
-                            wordFixed[len(wordFixed)-1]==final(backup, wordFixed)[1]:
+                    perfect.append(wordFixed)  #If all the letters are in the word,
+                    results[wordFixed] = i[1] #but there are other letters as well
 
-                perfect.append(wordFixed)  #If all the letters are in the word,
-                results[wordFixed] = i[1] #but there are other letters as well
+            elif amount==0:
 
-        elif amount==0:
+                '''If the length of the word is the same
+                as the amount of correct characters in the word
+                And if start and end match up'''
 
-            '''If the length of the word is the same
-            as the amount of correct characters in the word
-            And if start and end match up'''
+                if len(wordFixed)==i[1] + final(backup, wordFixed)[2] and len(wordFixed) > 1 and \
+                    wordFixed[0]==final(backup, wordFixed)[0] and \
+                    wordFixed[len(wordFixed) - 1]==final(backup, wordFixed)[1]:
 
-            if len(wordFixed)==i[1] + final(backup, wordFixed)[2] and len(wordFixed) > 1 and \
-                           \
-                            wordFixed[0]==final(backup, wordFixed)[0] and \
-                            wordFixed[len(wordFixed) - 1]==final(backup, wordFixed)[1]:
-
-                perfect.append(wordFixed)
-                results[wordFixed]=i[1] #Appends the word and it's char length to a dict.
+                    perfect.append(wordFixed)
+                    results[wordFixed]=i[1] #Appends the word and it's char length to a dict.
 
     return sorted_x
 

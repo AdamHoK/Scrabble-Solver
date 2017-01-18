@@ -18,7 +18,8 @@ letters=input("Enter your letters here"
 
 backup, letters=letters.split(), letters.split()[0]
 
-letters=''.join(questionMark(letters))
+letters=''.join(questionMark(letters)[0])
+
 #final(letters, letters)
 
 words={}
@@ -30,14 +31,13 @@ for word in array:
             counter+=1
     words[word]=counter
 
-
 perfect=[]
 results={}
 
 sort(words, perfect, letters, results, backup)
 
 linebreak=0
-for output in perfect:
+for output in sorted(perfect, key=len, reverse=True):
     linebreak+=1
     if linebreak%3==0:
         print()
