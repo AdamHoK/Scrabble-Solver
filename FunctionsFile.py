@@ -11,23 +11,31 @@ def questionMark(input):
     global amount
     amount=0
     l=list(input)
+    print(l)
     for letter in l:
+        print(letter)
         if letter=='?':
             amount+=1
-            l.pop(l.index(letter))
-    print(amount)
-    return l, amount
+    while l.count("?")!=0:
+        l.pop(l.index(letter))
+    return l
 
 
 def sort(x, perfect, letters, results, backup):
-    sorted_x = sorted(x.items(), key=operator.itemgetter(1))
+    sorted_x = sorted(x.items(), key=operator.itemgetter(1), reverse=True)
     for i in sorted_x:
+
         wordFixed=i[0]
-        wordFixed=wordFixed[:-1]
-        '''checker(letters, wordFixed) and '''
+        correctLength=i[1]
+        wordFixed = wordFixed[:-1]
         if len(wordFixed)>2:
+
+            '''If the length of the word is equal to or smaller than
+            the length of the input + the amount of blank tiles'''
+
             if amount>0:
-                if len(wordFixed)<=(len(letters)+amount) and \
+                if checker(letters, wordFixed) and len(wordFixed)<=(len(letters)+amount) and \
+                    \
                     wordFixed[0]==final(backup, wordFixed)[0] and \
                     wordFixed[len(wordFixed)-1]==final(backup, wordFixed)[1]:
 
@@ -40,14 +48,14 @@ def sort(x, perfect, letters, results, backup):
                 as the amount of correct characters in the word
                 And if start and end match up'''
 
-                if len(wordFixed)==i[1] + final(backup, wordFixed)[2] and len(wordFixed) > 1 and \
+                if len(wordFixed)==(correctLength + final(backup, wordFixed)[2]) and \
+                    \
                     wordFixed[0]==final(backup, wordFixed)[0] and \
                     wordFixed[len(wordFixed) - 1]==final(backup, wordFixed)[1]:
-
                     perfect.append(wordFixed)
                     results[wordFixed]=i[1] #Appends the word and it's char length to a dict.
 
-    return sorted_x
+    #return sorted_x
 
 
 def final(inputWord, w):
