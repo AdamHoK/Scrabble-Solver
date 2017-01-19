@@ -19,21 +19,28 @@ letters=input("\nEnter your letters here"
 letters=letters.upper()
 backup, letters=letters.split(), letters.split()[0]
 
-letters=''.join(questionMark(letters)[0])
-
+letters=''.join(questionMark(letters))
+print(letters)
 #final(letters, letters)
 
 words={}
 
 for word in array:
-    temp = []
-    repli=list(word)
-    repli2=list(letters)
-    for letter in repli2:
-        if letter in repli:
-            temp.append(letter)
+    counter=[]
+    '''This loop only has to make a dict with the word
+    and the amount of correct chars in the word'''
+    for letter in letters:
+        if letter in word:
+            counter.append(letter)
 
-    words[word]=len(temp)
+        while counter.count(letter)>word.count(letter):
+            counter.pop(counter.index(letter))
+
+        #if len(counter)==4 and len(word)-1==4:
+        #    print(word, len(word), counter, len(counter))
+
+        if counter!=0:
+            words[word]=len(counter)
 
 perfect=[]
 results={}
@@ -41,10 +48,13 @@ results={}
 sort(words, perfect, letters, results, backup)
 
 linebreak=0
+
 for output in sorted(perfect, key=len):#, reverse=True):
     linebreak+=1
-    if linebreak%3==0:
-        print()
-    else:
+
+    if linebreak%3!=0:
         print(output, end=" ")
+    else:
+        print(output,"\n")
+
 print()
